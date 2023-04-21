@@ -1,6 +1,6 @@
 import { HTMLAttributes, forwardRef } from "react";
 import { VariantProps, cva } from "class-variance-authority";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 
 //UI component that will be reused in the UI, so it wil have variants
 
