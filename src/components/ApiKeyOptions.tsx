@@ -1,39 +1,40 @@
 "use client";
 
-import { FC, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger
-} from "@/ui/DropdownMenu";
-import Button from "@/ui/Button";
-import { Loader2 } from "lucide-react";
-import { toast } from "@/ui/toast";
+} from "@/components/ui/DropdownMenu";
 import { createApiKey } from "@/helpers/create-api-key";
-import { useRouter } from "next/navigation";
 import { revokeApiKey } from "@/helpers/revoke-api-key";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { FC, useState } from "react";
+import Button from "@/ui/Button";
+import { toast } from "./ui/toast";
 
 interface ApiKeyOptionsProps {
-  apiKeyId: string;
+  // passing of entire object not allowed due to date property not being serializable
   apiKeyKey: string;
 }
 
-const ApiKeyOptions: FC<ApiKeyOptionsProps> = ({ apiKeyId, apiKeyKey }) => {
+const ApiKeyOptions: FC<ApiKeyOptionsProps> = ({ apiKeyKey }) => {
+  const router = useRouter();
   const [isCreatingNew, setIsCreatingNew] = useState<boolean>(false);
   const [isRevoking, setIsRevoking] = useState<boolean>(false);
-  const router = useRouter();
 
   const createNewApiKey = async () => {
     setIsCreatingNew(true);
     try {
-      await revokeApiKey({ keyId: apiKeyId });
+      await revokeApiKey();
       await createApiKey();
       router.refresh();
     } catch (error) {
       toast({
-        title: "Error creating API key",
-        message: "Please try again later!",
+        title: "Error creating new API key",
+        message: "Please try again later.",
         type: "error"
       });
     } finally {
@@ -44,12 +45,12 @@ const ApiKeyOptions: FC<ApiKeyOptionsProps> = ({ apiKeyId, apiKeyKey }) => {
   const revokeCurrentApiKey = async () => {
     setIsRevoking(true);
     try {
-      await revokeApiKey({ keyId: apiKeyId });
+      await revokeApiKey();
       router.refresh();
     } catch (error) {
       toast({
-        title: "Error revoking API key",
-        message: "Please try again later!",
+        title: "Error revoking your API key",
+        message: "Please try again later.",
         type: "error"
       });
     } finally {
@@ -77,18 +78,21 @@ const ApiKeyOptions: FC<ApiKeyOptionsProps> = ({ apiKeyId, apiKeyKey }) => {
         <DropdownMenuItem
           onClick={() => {
             navigator.clipboard.writeText(apiKeyKey);
+
             toast({
-              title: "Copied!",
-              message: "Copied to clipboard!",
+              title: "Copied",
+              message: "API key copied to clipboard",
               type: "success"
             });
           }}
         >
           Copy
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={createNewApiKey}>
           Create new key
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={revokeCurrentApiKey}>
           Revoke key
         </DropdownMenuItem>
