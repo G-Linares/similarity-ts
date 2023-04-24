@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import LargeHeading from "@/ui/LargeHeading";
-import Paragraph from "@/ui/LargeHeading";
+import Paragraph from "@/ui/Paragraph";
 
 import type { Metadata } from "next";
 
