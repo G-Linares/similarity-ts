@@ -45,7 +45,7 @@ const RequestApiKey: FC = ({}) => {
         <LargeHeading className="text-center">
           Request your API key
         </LargeHeading>
-        <Paragraph>You haven&apos;t requested an API yet.</Paragraph>
+        <Paragraph>You haven&apos;t requested an API key yet.</Paragraph>
       </div>
       <form
         onSubmit={createNewApiKey}
@@ -63,7 +63,7 @@ const RequestApiKey: FC = ({}) => {
           <Input
             readOnly
             value={apiKey ?? ""}
-            placeholder="Requet an API key to display it here!"
+            placeholder="Request an API key to display it here!"
           />
         </div>
         <div className="mt-6 flex justify-center sm:mt-0 sm:ml-4 sm:flex-shrink-0">

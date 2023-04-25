@@ -2,8 +2,10 @@ import { withMethods } from "@/lib/api-middlewares/with-methods";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { RevokeApiData } from "@/types/api/index.";
+
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
+
 import { z } from "zod";
 
 const handler = async (
